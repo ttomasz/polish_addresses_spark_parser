@@ -150,25 +150,32 @@ def select_cols_for_overture(df: DataFrame) -> DataFrame:
     )
 
 def select_cols_for_osmpoland(df: DataFrame) -> DataFrame:
-    return df.select(
-        f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:przestrzenNazw").alias("przestrzenNazw"),
-        f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:lokalnyId").alias("lokalnyId"),
-        f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:wersjaId").alias("wersjaId"),
-        *[f.col("prg-ad:jednostkaAdmnistracyjna")[i].alias(f"jednostkaAdmnistracyjna_{i}") for i in range(4)],
-        f.col("prg-ad:miejscowosc").alias("miejscowosc"),
-        f.col("prg-ad:czescMiejscowosci").alias("czescMiejscowosci"),
-        f.col("prg-ad:ulica").alias("ulica"),
-        f.col("prg-ad:numerPorzadkowy").alias("numerPorzadkowy"),
-        f.col("prg-ad:kodPocztowy").alias("kodPocztowy"),
-        f.col("prg-ad:status").alias("status"),
-        f.col("geometry"),
-        f.col("gml:identifier"),
-        f.col("prg-ad:komponent"),
-        f.col("prg-ad:obiektEMUiA"),
-        f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:poczatekWersjiObiektu").alias("poczatekWersjiObiektu"),
-        f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:koniecWersjiObiektu").alias("koniecWersjiObiektu"),
-        f.col("prg-ad:waznyOd").alias("prg-ad:waznyOd"),
-        f.col("prg-ad:waznyDo").alias("prg-ad:waznyDo"),
+    return (
+        df
+        .withColumn("x", f.expr("ST_X(geometry)"))
+        .withColumn("y", f.expr("ST_Y(geometry)"))
+        .select(
+            f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:przestrzenNazw").alias("przestrzenNazw"),
+            f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:lokalnyId").alias("lokalnyId"),
+            f.col("prg-ad:idIIP.bt:BT_Identyfikator.bt:wersjaId").alias("wersjaId"),
+            *[f.col("prg-ad:jednostkaAdmnistracyjna")[i].alias(f"jednostkaAdmnistracyjna_{i}") for i in range(4)],
+            f.col("prg-ad:miejscowosc").alias("miejscowosc"),
+            f.col("prg-ad:czescMiejscowosci").alias("czescMiejscowosci"),
+            f.col("prg-ad:ulica").alias("ulica"),
+            f.col("prg-ad:numerPorzadkowy").alias("numerPorzadkowy"),
+            f.col("prg-ad:kodPocztowy").alias("kodPocztowy"),
+            f.col("prg-ad:status").alias("status"),
+            f.col("x"),
+            f.col("y"),
+            f.col("geometry"),
+            f.col("gml:identifier"),
+            f.col("prg-ad:komponent"),
+            f.col("prg-ad:obiektEMUiA"),
+            f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:poczatekWersjiObiektu").alias("poczatekWersjiObiektu"),
+            f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:koniecWersjiObiektu").alias("koniecWersjiObiektu"),
+            f.col("prg-ad:waznyOd").alias("prg-ad:waznyOd"),
+            f.col("prg-ad:waznyDo").alias("prg-ad:waznyDo"),
+        )
     )
 
 
