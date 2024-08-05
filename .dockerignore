@@ -1,0 +1,6 @@
+data_export
+data_geoparquet
+data_xml
+data_zip
+venv
+.vscode
