@@ -70,9 +70,12 @@ def get_sedona_context() -> SparkSession:
     )
     sedona = SedonaContext.create(config)
 
-    mem = sedona.conf.get("spark.driver.memory", default=None)
-    if mem is not None and mem == "1g":
-        sedona.conf.set("spark.driver.memory", "3g")  # give the driver a bit more memory than default
+    driver_mem = sedona.conf.get("spark.driver.memory", default=None)
+    if driver_mem is not None and driver_mem == "1g":
+        sedona.conf.set("spark.driver.memory", "4g")  # give the driver a bit more memory than default
+    worker_mem = sedona.conf.get("spark.executor.memory", default=None)
+    if worker_mem is not None and worker_mem == "1g":
+        sedona.conf.set("spark.executor.memory", "4g")  # give the worker a bit more memory than default
 
     return sedona
 
