@@ -172,12 +172,12 @@ def select_cols_for_osmpoland(df: DataFrame) -> DataFrame:
             f.col("y"),
             f.col("geometry"),
             f.col("gml:identifier"),
-            f.col("prg-ad:komponent"),
-            f.col("prg-ad:obiektEMUiA"),
+            f.col("prg-ad:komponent").alias("komponent"),
+            f.col("prg-ad:obiektEMUiA").alias("obiektEMUiA"),
             f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:poczatekWersjiObiektu").alias("poczatekWersjiObiektu"),
             f.col("prg-ad:cyklZycia.bt:BT_CyklZyciaInfo.bt:koniecWersjiObiektu").alias("koniecWersjiObiektu"),
-            f.col("prg-ad:waznyOd").alias("prg-ad:waznyOd"),
-            f.col("prg-ad:waznyDo").alias("prg-ad:waznyDo"),
+            f.col("prg-ad:waznyOd").alias("waznyOd"),
+            f.col("prg-ad:waznyDo").alias("waznyDo"),
         )
     )
 
